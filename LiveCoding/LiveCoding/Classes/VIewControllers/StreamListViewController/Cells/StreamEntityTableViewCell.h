@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "StreamingEntity.h"
+#import "ESImageView.h"
 
 @interface StreamEntityTableViewCell : UITableViewCell
 
@@ -15,7 +16,7 @@
 #pragma mark - Properties
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
+@property (weak, nonatomic) IBOutlet ESImageView *thumbImageView;
 @property (strong, nonatomic) StreamingEntity *streamingEntity;
 
 #pragma mark -

@@ -24,10 +24,8 @@
     if (entity) {
         [[self titleLabel] setText:[entity title]];
         [[self authorLabel] setText:[entity author]];
-        NSURL *url = [NSURL URLWithString:[entity thumbUrl]];
-        NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
-        UIImage *thumbImage = [[UIImage alloc] initWithData:imageData];
-        [[self thumbImageView] setImage:thumbImage];
+        
+        [[self thumbImageView] setImageUrl:[entity thumbUrl]];
     }
 }
 

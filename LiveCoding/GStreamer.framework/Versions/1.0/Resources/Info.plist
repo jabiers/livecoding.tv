@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>CFBundleIdentifier</key>
+<string>org.freedesktop.gstreamer</string>
+<key>CFBundleName</key>
+<string>osx-framework</string>
+<key>CFBundleExecutable</key>
+<string>osx-framework</string>
+<key>CFBundlePackageGetInfoString</key>
+<string>Framework Bundle</string>
+<key>CFBundlePackageType</key>
+<string>FMWK</string>
+<key>CFBundleVersion</key>
+<string>15901</string>
+<key>CFBundleShortVersionString</key>
+<string>1.5.90.1</string>
+<key>LSMinimumSystemVersion</key>
+<string>10.8</string>
+<key>CFBundleInfoDictionaryVersion</key>
+<string>6.0</string>
+
+</dict>
+</plist>

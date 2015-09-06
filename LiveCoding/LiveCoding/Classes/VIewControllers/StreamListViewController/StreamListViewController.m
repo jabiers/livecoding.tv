@@ -8,15 +8,16 @@
 
 #import "StreamListViewController.h"
 #import "StreamEntityTableViewCell.h"
-#import "TFHpple.h"
 
-#define HOSTNAME @"https://www.livecoding.tv"
 @implementation StreamListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSURL *url = [NSURL URLWithString:HOSTNAME@"/livestreams/"];
+    [self setTitle:@"LiveCoding.TV"];
+//    [self.network sendRequestRestful:ESNETWORK_RESTFUL_GET withUrl:HOSTNAME[@"/livestreams/" withParams:nil withTarget:self]];
+    
+    NSURL *url = [NSURL URLWithString:HOST_NAME@"/livestreams/"];
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSString *sourceString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
@@ -34,13 +35,14 @@
             for (TFHppleElement *child in element.children) {
                 NSLog(@"child class : %@", child);
                 if ([child.tagName isEqualToString:@"a"]) {
-                    entity.streamingUrl = [NSString stringWithFormat:@"%@%@",HOSTNAME, child.attributes[@"href"]];
+                    entity.streamingUrl = [NSString stringWithFormat:@"%@%@",HOST_NAME, child.attributes[@"href"]];
                     TFHppleElement *img = child.children[3];
-                    entity.thumbUrl = [HOSTNAME stringByAppendingString:img.attributes[@"src"]];
+                    entity.thumbUrl = [HOST_NAME stringByAppendingString:img.attributes[@"src"]];
                     entity.author = [child.attributes[@"href"] substringWithRange:NSMakeRange(1, [child.attributes[@"href"] length] - 2)];
                     entity.title = img.attributes[@"alt"];
                 }
             }
+            
             [self.streamItems addObject:entity];
         }
     }
@@ -82,8 +84,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - 
+#pragma mark - Private Methods 
+
+-(IBAction)onMenuButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"MenuViewController" sender:nil];
+}
 #pragma mark -
 #pragma mark - UITableView Delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamItems] objectAtIndex:[indexPath row]]];
+}
 
 #pragma mark - 
 #pragma mark - UITableView DataSource
@@ -104,4 +117,19 @@
     return cell;
 }
 
+#pragma mark -
+#pragma mark - ESNetworkReceive Delegate
+-(void)didReceiveRequest:(NSString *)url withResult:(id)result withError:(NSError *)error withRef:(id)ref {
+    
+}
+
+#pragma mark -
+#pragma mark - Segment Controller
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"StreamPlayerViewController"]) {
+        StreamingEntity *entity = (StreamingEntity *)sender;
+        StreamPlayerViewController *vc = [segue destinationViewController];
+        [vc setEntity:entity];
+    }
+}
 @end

@@ -1,0 +1,20 @@
+//
+//  LiveCoding-prefix.pch
+//  LiveCoding
+//
+//  Created by Kim DaeHyun on 2015. 9. 6..
+//  Copyright (c) 2015년 Kim DaeHyun. All rights reserved.
+//
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "CommonUtils.h"
+#import "Configs.h"
+
+#endif

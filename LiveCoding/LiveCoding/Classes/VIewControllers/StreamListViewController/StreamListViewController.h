@@ -6,13 +6,15 @@
 //  Copyright (c) 2015년 Kim DaeHyun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ESViewController.h"
 #import "StreamingEntity.h"
+#import "StreamPlayerViewController.h"
 
-@interface StreamListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface StreamListViewController : ESViewController <UITableViewDataSource, UITableViewDelegate>
 
 #pragma mark -
 #pragma mark - Properties
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *streamItems;
+
 @end
