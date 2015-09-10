@@ -22,6 +22,7 @@
 
 -(void)setStreamingEntity:(StreamingEntity *)entity {
     if (entity) {
+        NSLog(@"title :%@", [entity title]);
         [[self titleLabel] setText:[entity title]];
         [[self authorLabel] setText:[entity author]];
         

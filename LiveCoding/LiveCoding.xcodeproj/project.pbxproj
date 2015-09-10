@@ -66,6 +66,7 @@
 		7ABAB6A71B9ACB020032DB04 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABAB6A41B9ACB020032DB04 /* XPathQuery.m */; };
 		7ABAB6AD1B9ACC190032DB04 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABAB6AC1B9ACC190032DB04 /* libxml2.2.dylib */; };
 		7ABAB6B11B9AD3050032DB04 /* StreamingEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABAB6B01B9AD3050032DB04 /* StreamingEntity.m */; };
+		7AF472DE1BA1B09A00B523F1 /* StreamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF472DD1BA1B09A00B523F1 /* StreamCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +185,8 @@
 		7ABAB6AC1B9ACC190032DB04 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		7ABAB6AF1B9AD3050032DB04 /* StreamingEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamingEntity.h; sourceTree = "<group>"; };
 		7ABAB6B01B9AD3050032DB04 /* StreamingEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamingEntity.m; sourceTree = "<group>"; };
+		7AF472DC1BA1B09A00B523F1 /* StreamCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamCollectionViewCell.h; sourceTree = "<group>"; };
+		7AF472DD1BA1B09A00B523F1 /* StreamCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -518,6 +521,8 @@
 			children = (
 				7ABAB6991B9AC21C0032DB04 /* StreamEntityTableViewCell.h */,
 				7ABAB69A1B9AC21C0032DB04 /* StreamEntityTableViewCell.m */,
+				7AF472DC1BA1B09A00B523F1 /* StreamCollectionViewCell.h */,
+				7AF472DD1BA1B09A00B523F1 /* StreamCollectionViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -701,6 +706,7 @@
 				7A7401E91B9C4A5700CAF2A6 /* ESNetwork.m in Sources */,
 				7ABAB66B1B9ABE4C0032DB04 /* AppDelegate.m in Sources */,
 				7A48E1791B9C7B3A00BDCFD2 /* Configs.m in Sources */,
+				7AF472DE1BA1B09A00B523F1 /* StreamCollectionViewCell.m in Sources */,
 				7A7401E01B9C4A5700CAF2A6 /* ESImageView.m in Sources */,
 				7ABAB6681B9ABE4C0032DB04 /* main.m in Sources */,
 				7A7401DC1B9C4A5700CAF2A6 /* ESGridViewCell.m in Sources */,

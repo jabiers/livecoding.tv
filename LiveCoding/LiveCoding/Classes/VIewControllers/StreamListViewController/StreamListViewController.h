@@ -10,11 +10,16 @@
 #import "StreamingEntity.h"
 #import "StreamPlayerViewController.h"
 
-@interface StreamListViewController : ESViewController <UITableViewDataSource, UITableViewDelegate>
+@interface StreamListViewController : ESViewController <
+UICollectionViewDataSource,
+UICollectionViewDelegate>
+//<UITableViewDataSource, UITableViewDelegate>
 
 #pragma mark -
 #pragma mark - Properties
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 @property (strong, nonatomic) NSMutableArray *streamItems;
 
 @end

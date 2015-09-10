@@ -8,6 +8,7 @@
 
 #import "StreamListViewController.h"
 #import "StreamEntityTableViewCell.h"
+#import "StreamCollectionViewCell.h"
 
 @implementation StreamListViewController
 
@@ -24,59 +25,60 @@
     TFHpple *xpath = [[TFHpple alloc] initWithData:data isXML:NO];
     NSArray *elements = [NSArray array];
    
-    elements = [xpath searchWithXPathQuery:@"//html//body//div"]; // <-- tags
-    
+    elements = [xpath searchWithXPathQuery:@"//html//body//div[@class='browse-main-videos--item']"]; // <-- tags
+        
     self.streamItems = [NSMutableArray array];
     
     for (TFHppleElement *element in elements) {
         
-        if ([element.attributes[@"class"] isEqualToString:@"small-video-box"]) {
-            StreamingEntity *entity = [[StreamingEntity alloc] init];
-            for (TFHppleElement *child in element.children) {
-                NSLog(@"child class : %@", child);
-                if ([child.tagName isEqualToString:@"a"]) {
-                    entity.streamingUrl = [NSString stringWithFormat:@"%@%@",HOST_NAME, child.attributes[@"href"]];
-                    TFHppleElement *img = child.children[3];
-                    entity.thumbUrl = [HOST_NAME stringByAppendingString:img.attributes[@"src"]];
-                    entity.author = [child.attributes[@"href"] substringWithRange:NSMakeRange(1, [child.attributes[@"href"] length] - 2)];
-                    entity.title = img.attributes[@"alt"];
-                }
-            }
-            
-            [self.streamItems addObject:entity];
+        StreamingEntity *entity = [[StreamingEntity alloc] init];
+        TFHppleElement *img = [element searchWithXPathQuery:@"//img[@class='thumbnail']"][0];
+        entity.thumbUrl =  [NSString stringWithFormat:@"%@%@", HOST_NAME,[img attributes][@"src"]];
+        
+        TFHppleElement *titleElement = [element searchWithXPathQuery:@"//span//a[@class='woopra_live_click']"][0];
+        NSString *title = [titleElement attributes][@"title"];
+        if (!title) {
+            title = [titleElement text];
         }
+        
+        entity.title = title;
+        entity.streamingUrl = [NSString stringWithFormat:@"%@%@",HOST_NAME, [titleElement attributes][@"href"]];
+        
+        NSArray *contryFlag = [element searchWithXPathQuery:@"//span//img[@class='country-flag']"];
+        if ([contryFlag count] > 0) {
+            TFHppleElement *obj = [contryFlag objectAtIndex:0];
+            entity.contry = [obj attributes][@"src"];
+        }
+        
+        TFHppleElement *nameElement = [element searchWithXPathQuery:@"//span"][2];
+        NSString *author = [nameElement content];
+        
+        author = [author stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        author = [author stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        author = [[author componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@""];
+        
+        entity.author = author;
+        
+        NSArray *item = [element searchWithXPathQuery:@"//span[@class='browse-main-videos--info']"];
+        
+        TFHppleElement *video_info = item[0];
+        
+        NSArray *expertElement = [video_info searchWithXPathQuery:@"//span[@class='browse-main-videos--info-item']"];
+        
+        entity.expert = [[[expertElement[0] content]componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@""];
+        
+//        NSLog(@"expert : %@", expert);
+        
+        entity.language = [expertElement[1] content];
+//        dic[@"expert"] = [item[2] content];
+        
+        [self.streamItems addObject:entity];
     }
     
     
-    for (StreamingEntity *entity in self.streamItems) {
-        NSLog(@"\ntitle : %@\nauthor : %@\nentity url : %@\n thumb url : %@", entity.title,entity.author, entity.streamingUrl, entity.thumbUrl);
-    }
+    [self.collectionView reloadData];
+//    [self.tableView reloadData];
     
-    [self.tableView reloadData];
-    
-//    NSArray *sourceArr = [doc searchWithXPathQuery:@"<div class=\"small-video-box\">"];
-    
-   
-/*
-    <div class="small-video-box">
-    <a class="item woopra_live_click" href="/paulkim/"><div class="playBtnbg"></div><span class="playBtn"></span>
-				
-    <img class="thumbnail thumbnail-250x140" src="/video/livestream/paulkim/thumbnail_250_140/" alt="make livecoding.tv App for iOS (then Android)" />
-				
-    </a>
-    <span class="white-span"><a class="woopra_live_click" href="/paulkim/" title="make livecoding.tv App for iOS (then Android)" data-toggle="tooltip" data-placement="bottom">make livecoding.tv App fo...</a></span>
-    <span>
-				<img src="/static/flags/kr.gif" class="country-flag" alt="South Korea" data-title="South Korea" data-toggle="tooltip" data-placement="right" />&nbsp;PAULKIM
-    </span>
-    <span class="info text-ellipsis">
-				
-    <span class="item" title="Views" data-toggle="tooltip" data-placement="right"><i class="fa fa-user"></i>&nbsp;14</span>
-    <span class="item">Obj-C/Swift (iOS)</span>
-    <span class="item">(intermediate)</span>
-    </span>
-    </div>
-*/
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,8 +87,38 @@
 }
 
 
+#pragma mark -
+#pragma mark - UICollection Delegate
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamItems] objectAtIndex:[indexPath row]]];
+
+}
 #pragma mark - 
-#pragma mark - Private Methods 
+#pragma mark - UICollection Data Source
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self.streamItems count];
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    StreamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StreamCollectionViewCell" forIndexPath:indexPath];
+    
+    if (!cell) {
+        cell = [[StreamCollectionViewCell alloc] init];
+    }
+    cell.streamingEntity = [self.streamItems objectAtIndex:indexPath.row];
+    
+    return cell;
+    
+}
+
+#pragma mark -
+#pragma mark - Private Methods
 
 -(IBAction)onMenuButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"MenuViewController" sender:nil];
@@ -94,28 +126,28 @@
 #pragma mark -
 #pragma mark - UITableView Delegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamItems] objectAtIndex:[indexPath row]]];
-}
-
-#pragma mark - 
-#pragma mark - UITableView DataSource
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self streamItems] count];
-}
-
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    StreamEntityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StreamEntityTableViewCell"];
-    
-    [cell setStreamingEntity:[[self streamItems] objectAtIndex:[indexPath row]]];
-    return cell;
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamItems] objectAtIndex:[indexPath row]]];
+//}
+//
+//#pragma mark - 
+//#pragma mark - UITableView DataSource
+//
+//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//    return 1;
+//}
+//
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return [[self streamItems] count];
+//}
+//
+//-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    StreamEntityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StreamEntityTableViewCell"];
+//    
+//    [cell setStreamingEntity:[[self streamItems] objectAtIndex:[indexPath row]]];
+//    return cell;
+//}
 
 #pragma mark -
 #pragma mark - ESNetworkReceive Delegate
