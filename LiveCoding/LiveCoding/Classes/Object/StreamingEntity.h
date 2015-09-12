@@ -8,18 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
+
+typedef enum {
+    StreamTypeLive = 0,
+    StreamTypeVideo,
+    StreamTypePlayList
+}StreamType;
+
 @interface StreamingEntity : NSObject
 
 #pragma mark -
 #pragma mark - Properties
 
+@property (assign, nonatomic) StreamType type;
 @property (strong, nonatomic) NSString *streamingUrl;
 @property (strong, nonatomic) NSString *thumbUrl;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *contry;
 @property (strong, nonatomic) NSString *author;
+@property (strong, nonatomic) NSString *authorAvatar;
 @property (strong, nonatomic) NSString *expert;
 @property (strong, nonatomic) NSString *numberOfViews;
+@property (strong, nonatomic) NSString *numberOfVideos;
 @property (strong, nonatomic) NSString *language;
 //@property (strong, nonatomic) NSString *
 

@@ -41,19 +41,42 @@
     [self setTitle:[[self entity] title]];
     [[self thumbImageView] setImageUrl:[[self entity] thumbUrl]];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", HOST_NAME, [[self entity] author]]];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSString *sourceString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSRange start = [sourceString rangeOfString: @"rtmp"];
-    NSString *startString = [sourceString substringFromIndex:start.location];
-    NSRange end = [startString rangeOfString: @"\","];
-    NSString *endString = [startString substringToIndex:end.location];
     
-    NSString *rtmp = endString;
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:[[self entity] streamingUrl] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *sourceString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSString *rtmp;
+        @try {
+            NSRange start = [sourceString rangeOfString: @"rtmp"];
+            NSString *startString = [sourceString substringFromIndex:start.location];
+            NSRange end = [startString rangeOfString: @"\","];
+            rtmp = [startString substringToIndex:end.location];
+            
+        } @catch (NSException * e) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"error" message:@"need to login" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+            [alertView show];
+        }
+        
+        if (rtmp) {
+            NSLog(@"rtmp : %@", rtmp);
+            [self setUri:rtmp];
+            [self gstPlayerInit];
+        }
 
-    [self setUri:rtmp];
-    [self gstPlayerInit];
+        [self onPlayButtonClicked:nil];
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    NSString *chatUrlString = [NSString stringWithFormat:@"%@/chat/%@", HOST_NAME, [[self entity] author]];
+    NSURL *chatUrl = [NSURL URLWithString:chatUrlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:chatUrl];
+    [self.webView loadRequest:request];
+    
 
 }
 
@@ -76,6 +99,18 @@
     gst_player_pause(player);
     is_playing_desired = NO;
     [UIApplication sharedApplication].idleTimerDisabled = NO;
+}
+
+#pragma mark -
+#pragma mark - Private Methods
+
+-(IBAction)hiddemButtonClicked:(id)sender {
+    if (self.webViewHeightConstraint.constant > 0) {
+        self.webViewHeightConstraint.constant = 0;
+    } else {
+        self.webViewHeightConstraint.constant = 200;
+    }
+
 }
 
 #pragma mark -

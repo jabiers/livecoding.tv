@@ -8,16 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "StreamingEntity.h"
-#import "ESImageView.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface StreamCollectionViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *authorAvatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *authorNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *expertLabel;
+@property (weak, nonatomic) IBOutlet UILabel *languageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewerLabel;
-@property (weak, nonatomic) IBOutlet ESImageView *mainImageView;
-@property (weak, nonatomic) IBOutlet ESImageView *contryImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *contryImageView;
+@property (weak, nonatomic) IBOutlet UIView *recIconView;
 @property (strong, nonatomic) StreamingEntity *streamingEntity;
 
 @end

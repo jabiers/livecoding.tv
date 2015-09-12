@@ -15,6 +15,17 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "CommonUtils.h"
+#import "AppDelegate.h"
 #import "Configs.h"
+#import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
+#import "UIAlertView+Blocks.h"
+
+#ifndef TARGET_OS_IOS
+#define TARGET_OS_IOS TARGET_OS_IPHONE
+#endif
+#ifndef TARGET_OS_WATCH
+#define TARGET_OS_WATCH 0
+#endif
 
 #endif

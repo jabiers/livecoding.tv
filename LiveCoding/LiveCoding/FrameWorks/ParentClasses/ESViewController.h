@@ -7,10 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ESNetwork.h"
+typedef void(^ViewControllerRefresh)();
 
-@interface ESViewController : UIViewController <ESNetworkReceiveProtocol>
+@class LeftPanelViewController;
+@interface ESViewController : UIViewController
 
-@property (strong, nonatomic) ESNetwork *network;
+@property (weak, nonatomic) LeftPanelViewController *leftPanel;
+@property (assign, nonatomic) BOOL isShownleftPanel;
+@property (strong, nonatomic) UIView *alertBackGroundView;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (assign, nonatomic) ViewControllerRefresh refreshAction;
+-(void)attachLeftPanel;
+-(void)showLeftPanelIfNeed;
+
+
+- (void)setRefreshWithScrollView:(UIScrollView *)scrollView
+                      withAction:(ViewControllerRefresh)action;
 
 @end

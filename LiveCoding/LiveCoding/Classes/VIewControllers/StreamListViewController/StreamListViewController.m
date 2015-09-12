@@ -9,25 +9,17 @@
 #import "StreamListViewController.h"
 #import "StreamEntityTableViewCell.h"
 #import "StreamCollectionViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation StreamListViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)getStreamEntityList:(NSData *)sourceData {
     
-    [self setTitle:@"LiveCoding.TV"];
-//    [self.network sendRequestRestful:ESNETWORK_RESTFUL_GET withUrl:HOSTNAME[@"/livestreams/" withParams:nil withTarget:self]];
-    
-    NSURL *url = [NSURL URLWithString:HOST_NAME@"/livestreams/"];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSString *sourceString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    TFHpple *xpath = [[TFHpple alloc] initWithData:data isXML:NO];
+    TFHpple *xpath = [[TFHpple alloc] initWithData:sourceData
+                                             isXML:NO];
     NSArray *elements = [NSArray array];
-   
+    
     elements = [xpath searchWithXPathQuery:@"//html//body//div[@class='browse-main-videos--item']"]; // <-- tags
-        
-    self.streamItems = [NSMutableArray array];
     
     for (TFHppleElement *element in elements) {
         
@@ -47,10 +39,16 @@
         NSArray *contryFlag = [element searchWithXPathQuery:@"//span//img[@class='country-flag']"];
         if ([contryFlag count] > 0) {
             TFHppleElement *obj = [contryFlag objectAtIndex:0];
-            entity.contry = [obj attributes][@"src"];
+            entity.contry = [NSString stringWithFormat:@"%@%@",HOST_NAME,[obj attributes][@"src"]];
         }
         
-        TFHppleElement *nameElement = [element searchWithXPathQuery:@"//span"][2];
+        NSArray *user_avatar = [element searchWithXPathQuery:@"//span//img[@class='user-avatar']"];
+        if ([user_avatar count] > 0) {
+            TFHppleElement *obj = [user_avatar objectAtIndex:0];
+            entity.authorAvatar = [NSString stringWithFormat:@"%@%@",HOST_NAME,[obj attributes][@"src"]];
+        }
+
+        TFHppleElement *nameElement = [element searchWithXPathQuery:@"//span[@class='browse-main-videos--username']"][0];
         NSString *author = [nameElement content];
         
         author = [author stringByReplacingOccurrencesOfString:@"\t" withString:@""];
@@ -64,23 +62,99 @@
         TFHppleElement *video_info = item[0];
         
         NSArray *expertElement = [video_info searchWithXPathQuery:@"//span[@class='browse-main-videos--info-item']"];
+        TFHppleElement *expert = expertElement[0];
+        entity.expert = [[[expert content] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@""];
         
-        entity.expert = [[[expertElement[0] content]componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@""];
+        if ([expertElement count] > 1) {
+            entity.language = [expertElement[1] content];
+        } else {
+            entity.numberOfVideos = [entity.expert stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        }
         
-//        NSLog(@"expert : %@", expert);
+        NSArray *viewerArr = [video_info searchWithXPathQuery:@"//span[@class='browse-main-videos--info-item views']"];
+        TFHppleElement *viewer;
+        if ([viewerArr count] > 0) {
+            viewer = viewerArr[0];
+        }
+        if (viewer) {
+            entity.numberOfViews = [[[[viewer content] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@""] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        }
+        //        NSLog(@"%@", expertElement[2]);
+        //        entity.numberOfViews = [expertElement[2] content];
+        //        dic[@"expert"] = [item[2] content];
         
-        entity.language = [expertElement[1] content];
-//        dic[@"expert"] = [item[2] content];
-        
-        [self.streamItems addObject:entity];
+        NSArray *redDot = [element searchWithXPathQuery:@"//div[@class='playRedDot']"];
+        if ([redDot count] > 0) {
+            entity.type = StreamTypeLive;
+            [self.streamLiveItems addObject:entity];
+        } else {
+            
+            if (self.viewMode == StreamListViewModeTopVideos) {
+                entity.type = StreamTypeVideo;
+            } else {
+                entity.type = StreamTypePlayList;
+            }
+            
+            [self.streamVideoItems addObject:entity];
+        }
     }
     
-    
     [self.collectionView reloadData];
-//    [self.tableView reloadData];
-    
 }
 
+-(void)initialize {
+    self.streamLiveItems = [NSMutableArray array];
+    self.streamVideoItems = [NSMutableArray array];
+    self.viewMode = StreamListViewModeLive;
+
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self setTitle:@"LiveCoding.TV"];
+    
+    [self initialize];
+    self.viewMode = StreamListViewModePlayList;
+    [self request];
+}
+
+
+-(void)clearItems {
+    [self.streamLiveItems removeAllObjects];
+    [self.streamVideoItems removeAllObjects];
+}
+-(void)reload {
+    
+    [self clearItems];
+    [self request];
+}
+
+-(void)request {
+    
+    if (self.viewMode == StreamListViewModeLive
+        || self.viewMode == StreamListViewModeTopVideos) {
+        AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:HOST_NAME@"/livestreams/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self getStreamEntityList:responseObject];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    } else {
+        AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:HOST_NAME@"/playlists/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self getStreamEntityList:responseObject];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -91,7 +165,7 @@
 #pragma mark - UICollection Delegate
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamItems] objectAtIndex:[indexPath row]]];
+    [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamLiveItems] objectAtIndex:[indexPath row]]];
 
 }
 #pragma mark - 
@@ -102,7 +176,12 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.streamItems count];
+    if (self.viewMode == StreamListViewModeLive) {
+        return [self.streamLiveItems count];
+    } else {
+        return [self.streamVideoItems count];
+    }
+    return 0;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,17 +190,39 @@
     if (!cell) {
         cell = [[StreamCollectionViewCell alloc] init];
     }
-    cell.streamingEntity = [self.streamItems objectAtIndex:indexPath.row];
+    
+    cell.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    cell.layer.borderWidth = 2.0f;
+    cell.layer.cornerRadius = 5.0f;
+    
+    if (self.viewMode == StreamListViewModeLive) {
+        cell.streamingEntity = [self.streamLiveItems objectAtIndex:indexPath.row];
+    } else if (self.viewMode == StreamListViewModeTopVideos
+               || self.viewMode == StreamListViewModePlayList) {
+        cell.streamingEntity = [self.streamVideoItems objectAtIndex:indexPath.row];
+    }
+
     
     return cell;
     
 }
 
+#pragma mark - 
+#pragma mark - Public Methods
+-(void)setViewMode:(StreamListViewMode)viewMode {
+    _viewMode = viewMode;
+    
+    [self.collectionView reloadData];
+}
 #pragma mark -
 #pragma mark - Private Methods
 
 -(IBAction)onMenuButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"MenuViewController" sender:nil];
+}
+
+-(IBAction)onLeftButtonClicked:(id)sender {
+    [self showLeftPanelIfNeed];
 }
 #pragma mark -
 #pragma mark - UITableView Delegate
@@ -148,12 +249,6 @@
 //    [cell setStreamingEntity:[[self streamItems] objectAtIndex:[indexPath row]]];
 //    return cell;
 //}
-
-#pragma mark -
-#pragma mark - ESNetworkReceive Delegate
--(void)didReceiveRequest:(NSString *)url withResult:(id)result withError:(NSError *)error withRef:(id)ref {
-    
-}
 
 #pragma mark -
 #pragma mark - Segment Controller

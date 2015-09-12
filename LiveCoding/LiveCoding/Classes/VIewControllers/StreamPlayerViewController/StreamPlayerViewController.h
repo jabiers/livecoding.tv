@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet ESImageView *thumbImageView;
 @property (weak, nonatomic) IBOutlet UIView *video_view;
 @property (weak, nonatomic) IBOutlet UIView *video_container_view;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *webViewHeightConstraint;
 
 @property (strong, nonatomic) StreamingEntity *entity;
 @property (retain,nonatomic) NSString *uri;

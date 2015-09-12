@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #define HOST_NAME @"https://www.livecoding.tv"
+#define APP_DELEGATE ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+
+#define LEFT_PANEL_LIST @[@"LiveStream", @"Videos", @"PlayList"]
 
 @interface Configs : NSObject
 

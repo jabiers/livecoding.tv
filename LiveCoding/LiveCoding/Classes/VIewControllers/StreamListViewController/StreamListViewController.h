@@ -10,16 +10,23 @@
 #import "StreamingEntity.h"
 #import "StreamPlayerViewController.h"
 
+typedef enum {
+    StreamListViewModeLive,
+    StreamListViewModeTopVideos,
+    StreamListViewModePlayList
+} StreamListViewMode;
+
 @interface StreamListViewController : ESViewController <
 UICollectionViewDataSource,
 UICollectionViewDelegate>
-//<UITableViewDataSource, UITableViewDelegate>
 
 #pragma mark -
 #pragma mark - Properties
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (assign, nonatomic) StreamListViewMode viewMode;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) NSMutableArray *streamLiveItems;
+@property (strong, nonatomic) NSMutableArray *streamVideoItems;
 
-@property (strong, nonatomic) NSMutableArray *streamItems;
-
+-(void)reload;
 @end
