@@ -16,10 +16,11 @@ typedef void(^ViewControllerRefresh)();
 @property (assign, nonatomic) BOOL isShownleftPanel;
 @property (strong, nonatomic) UIView *alertBackGroundView;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
-@property (assign, nonatomic) ViewControllerRefresh refreshAction;
+@property (copy, nonatomic) ViewControllerRefresh refreshAction;
+
 -(void)attachLeftPanel;
 -(void)showLeftPanelIfNeed;
-
+-(void)endRefreshControl;
 
 - (void)setRefreshWithScrollView:(UIScrollView *)scrollView
                       withAction:(ViewControllerRefresh)action;

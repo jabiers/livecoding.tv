@@ -114,7 +114,6 @@
     [self setTitle:@"LiveCoding.TV"];
     
     [self initialize];
-    self.viewMode = StreamListViewModePlayList;
     [self request];
 }
 

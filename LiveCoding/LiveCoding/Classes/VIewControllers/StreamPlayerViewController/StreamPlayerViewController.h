@@ -10,12 +10,13 @@
 #import "StreamingEntity.h"
 #import "ESImageView.h"
 
-@interface StreamPlayerViewController : ESViewController
+@interface StreamPlayerViewController : ESViewController <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet ESImageView *thumbImageView;
 @property (weak, nonatomic) IBOutlet UIView *video_view;
 @property (weak, nonatomic) IBOutlet UIView *video_container_view;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *webViewHeightConstraint;
 
 @property (strong, nonatomic) StreamingEntity *entity;

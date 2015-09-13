@@ -41,8 +41,6 @@
     [self setTitle:[[self entity] title]];
     [[self thumbImageView] setImageUrl:[[self entity] thumbUrl]];
     
-    
-    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -73,11 +71,27 @@
     }];
     
     NSString *chatUrlString = [NSString stringWithFormat:@"%@/chat/%@", HOST_NAME, [[self entity] author]];
+    
     NSURL *chatUrl = [NSURL URLWithString:chatUrlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:chatUrl];
     [self.webView loadRequest:request];
     
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapGestureClicked:)];
+    [self.video_view addGestureRecognizer:tapGesture];
 
+}
+
+-(void)onTapGestureClicked:(id)sender {
+    if ([self.playPauseButton isHidden]) {
+        [self.playPauseButton setHidden:NO];
+        [self.playPauseButton setAlpha:0.0f];
+        [UIView animateWithDuration:0.5f animations:^{
+            [self.playPauseButton setAlpha:1.0f];
+        } completion:^(BOOL finished) {
+
+        }];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -89,16 +103,56 @@
     [UIApplication sharedApplication].idleTimerDisabled = NO;
 }
 
--(IBAction)onPlayButtonClicked:(id)sender {
-    gst_player_play (player);
-    is_playing_desired = YES;
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
+
+-(IBAction)onButtonClicked:(id)sender {
+    if (![self.playPauseButton isSelected]) {
+        [self onPlayButtonClicked:nil];
+    } else {
+        [self onPauseButtonClicked:nil];
+    }
 }
 
--(IBAction)onPauseButtonClicked:(id)sender {
+-(IBAction)onFollowButtonClicked:(id)sender {
+    
+}
+
+-(IBAction)onDonateButtonClicked:(id)sender {
+}
+
+-(IBAction)onHireButtonClicked:(id)sender {
+    
+}
+
+-(IBAction)onLiveButtonClicked:(id)sender {
+    
+}
+
+-(void)onPlayButtonClicked:(id)sender {
+    gst_player_play (player);
+    is_playing_desired = YES;
+    [self.playPauseButton setSelected:YES];
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+    
+    [self.playPauseButton setAlpha:1.0f];
+    [UIView animateKeyframesWithDuration:0.5f delay:2.0f options:UIViewKeyframeAnimationOptionAllowUserInteraction animations:^{
+        [self.playPauseButton setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [self.playPauseButton setHidden:YES];
+    }];
+}
+
+-(void)onPauseButtonClicked:(id)sender {
     gst_player_pause(player);
     is_playing_desired = NO;
+    [self.playPauseButton setSelected:NO];
     [UIApplication sharedApplication].idleTimerDisabled = NO;
+    
+    [self.playPauseButton setHidden:NO];
+    [self.playPauseButton setAlpha:0.0f];
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.playPauseButton setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+    }];
 }
 
 #pragma mark -

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A07F1121BA554CA00D5E5A7 /* Pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A07F1101BA554CA00D5E5A7 /* Pause.png */; };
+		7A07F1131BA554CA00D5E5A7 /* Play.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A07F1111BA554CA00D5E5A7 /* Play.png */; };
+		7A07F1171BA5675B00D5E5A7 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A07F1161BA5675B00D5E5A7 /* ScheduleViewController.m */; };
+		7A07F11C1BA56AAD00D5E5A7 /* ScheduleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A07F11B1BA56AAD00D5E5A7 /* ScheduleTableViewCell.m */; };
+		7A07F11F1BA56B9200D5E5A7 /* ScheduleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A07F11E1BA56B9200D5E5A7 /* ScheduleEntity.m */; };
 		7A48E1421B9C664400BDCFD2 /* EaglUIVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E1381B9C664400BDCFD2 /* EaglUIVIew.m */; };
 		7A48E1451B9C664400BDCFD2 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E1411B9C664400BDCFD2 /* VideoViewController.m */; };
 		7A48E1471B9C6F8400BDCFD2 /* GStreamer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A48E1461B9C6F8400BDCFD2 /* GStreamer.framework */; };
@@ -101,6 +106,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A07F1101BA554CA00D5E5A7 /* Pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause.png; sourceTree = "<group>"; };
+		7A07F1111BA554CA00D5E5A7 /* Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play.png; sourceTree = "<group>"; };
+		7A07F1151BA5675B00D5E5A7 /* ScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
+		7A07F1161BA5675B00D5E5A7 /* ScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
+		7A07F11A1BA56AAD00D5E5A7 /* ScheduleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleTableViewCell.h; sourceTree = "<group>"; };
+		7A07F11B1BA56AAD00D5E5A7 /* ScheduleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleTableViewCell.m; sourceTree = "<group>"; };
+		7A07F11D1BA56B9200D5E5A7 /* ScheduleEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleEntity.h; sourceTree = "<group>"; };
+		7A07F11E1BA56B9200D5E5A7 /* ScheduleEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleEntity.m; sourceTree = "<group>"; };
 		7A48E1221B9C62EB00BDCFD2 /* LiveCoding-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LiveCoding-prefix.pch"; sourceTree = "<group>"; };
 		7A48E1371B9C664400BDCFD2 /* EaglUIVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaglUIVIew.h; sourceTree = "<group>"; };
 		7A48E1381B9C664400BDCFD2 /* EaglUIVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaglUIVIew.m; sourceTree = "<group>"; };
@@ -281,6 +294,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7A07F10F1BA554CA00D5E5A7 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				7A07F1101BA554CA00D5E5A7 /* Pause.png */,
+				7A07F1111BA554CA00D5E5A7 /* Play.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		7A07F1141BA5674D00D5E5A7 /* ScheduleViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7A07F1181BA56A9C00D5E5A7 /* Cells */,
+				7A07F1191BA56A9C00D5E5A7 /* Views */,
+				7A07F1151BA5675B00D5E5A7 /* ScheduleViewController.h */,
+				7A07F1161BA5675B00D5E5A7 /* ScheduleViewController.m */,
+				7A07F11D1BA56B9200D5E5A7 /* ScheduleEntity.h */,
+				7A07F11E1BA56B9200D5E5A7 /* ScheduleEntity.m */,
+			);
+			path = ScheduleViewController;
+			sourceTree = "<group>";
+		};
+		7A07F1181BA56A9C00D5E5A7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7A07F11A1BA56AAD00D5E5A7 /* ScheduleTableViewCell.h */,
+				7A07F11B1BA56AAD00D5E5A7 /* ScheduleTableViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7A07F1191BA56A9C00D5E5A7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		7A48E1361B9C664400BDCFD2 /* gst */ = {
 			isa = PBXGroup;
 			children = (
@@ -497,6 +548,7 @@
 				7AA52C7A1B9C56970035F26F /* UIKit.framework */,
 				7AA52C781B9C56910035F26F /* CoreGraphics.framework */,
 				7ABAB6AC1B9ACC190032DB04 /* libxml2.2.dylib */,
+				7A07F10F1BA554CA00D5E5A7 /* Resource */,
 				7A74017F1B9C476500CAF2A6 /* FrameWorks */,
 				7ABAB6641B9ABE4C0032DB04 /* LiveCoding */,
 				7ABAB67E1B9ABE4C0032DB04 /* LiveCodingTests */,
@@ -566,6 +618,7 @@
 		7ABAB68F1B9AC0BF0032DB04 /* VIewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7A07F1141BA5674D00D5E5A7 /* ScheduleViewController */,
 				7AF44E681BA42D1600886736 /* RootViewController */,
 				7AF44E2A1BA40BDC00886736 /* LeftPanelVIewController */,
 				7ABAB6931B9AC1ED0032DB04 /* StreamListViewController */,
@@ -809,9 +862,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ABAB6711B9ABE4C0032DB04 /* Main.storyboard in Resources */,
+				7A07F1121BA554CA00D5E5A7 /* Pause.png in Resources */,
 				7A7401D31B9C4A5700CAF2A6 /* blackArrow.png in Resources */,
 				7ABAB6761B9ABE4C0032DB04 /* LaunchScreen.xib in Resources */,
 				7A7401E81B9C4A5700CAF2A6 /* UIImage-Categories.podspec in Resources */,
+				7A07F1131BA554CA00D5E5A7 /* Play.png in Resources */,
 				7A48E1701B9C779300BDCFD2 /* fonts.conf in Resources */,
 				7A7401DA1B9C4A5700CAF2A6 /* whiteArrow@2x.png in Resources */,
 				7A48E1721B9C779300BDCFD2 /* Ubuntu-R.ttf in Resources */,
@@ -869,6 +924,8 @@
 				7A7401F01B9C4D7C00CAF2A6 /* StreamPlayerViewController.m in Sources */,
 				7AF44E5C1BA424C100886736 /* AFURLResponseSerialization.m in Sources */,
 				7AF44E651BA424C100886736 /* UIWebView+AFNetworking.m in Sources */,
+				7A07F1171BA5675B00D5E5A7 /* ScheduleViewController.m in Sources */,
+				7A07F11F1BA56B9200D5E5A7 /* ScheduleEntity.m in Sources */,
 				7ABAB6A51B9ACB020032DB04 /* TFHpple.m in Sources */,
 				7A7401941B9C484000CAF2A6 /* ESViewController.m in Sources */,
 				7AF44E621BA424C100886736 /* UIImageView+AFNetworking.m in Sources */,
@@ -877,6 +934,7 @@
 				7A7401E51B9C4A5700CAF2A6 /* UIImage+Alpha.m in Sources */,
 				7AF44E5B1BA424C100886736 /* AFURLRequestSerialization.m in Sources */,
 				7A7401E11B9C4A5700CAF2A6 /* ImageManager.m in Sources */,
+				7A07F11C1BA56AAD00D5E5A7 /* ScheduleTableViewCell.m in Sources */,
 				7A7401EB1B9C4A5700CAF2A6 /* ESOperation.m in Sources */,
 				7A7401E91B9C4A5700CAF2A6 /* ESNetwork.m in Sources */,
 				7ABAB66B1B9ABE4C0032DB04 /* AppDelegate.m in Sources */,

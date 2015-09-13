@@ -114,7 +114,13 @@
 }
 
 -(void)onRefreshTouched {
-    self.refreshAction();
+    if (self.refreshAction) {
+        self.refreshAction();
+    }
+}
+
+-(void)endRefreshControl {
+    [self.refreshControl endRefreshing];
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

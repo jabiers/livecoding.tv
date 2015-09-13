@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "LeftPanelViewController.h"
 #import "StreamListViewController.h"
+#import "ScheduleViewController.h"
 
 @implementation RootViewController
 
@@ -64,6 +65,8 @@
             
             [self setTitle:@"PlayLists"];
 
+        } else if ([title isEqualToString:@"Schedule"]) {
+            [self performSegueWithIdentifier:@"ScheduleViewController" sender:nil];
         }
         
     }
