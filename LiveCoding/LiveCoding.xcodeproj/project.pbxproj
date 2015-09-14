@@ -22,6 +22,7 @@
 		7A48E1731B9C784B00BDCFD2 /* gst_ios_init.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E16E1B9C779300BDCFD2 /* gst_ios_init.m */; };
 		7A48E1761B9C7B2800BDCFD2 /* CommonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E1751B9C7B2800BDCFD2 /* CommonUtils.m */; };
 		7A48E1791B9C7B3A00BDCFD2 /* Configs.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E1781B9C7B3A00BDCFD2 /* Configs.m */; };
+		7A5864B61BA6EE6C009EF427 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5864B51BA6EE6C009EF427 /* WebViewController.m */; };
 		7A7401941B9C484000CAF2A6 /* ESViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7401931B9C484000CAF2A6 /* ESViewController.m */; };
 		7A7401D11B9C4A5700CAF2A6 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7401981B9C4A5700CAF2A6 /* UIAlertView+Blocks.m */; };
 		7A7401D21B9C4A5700CAF2A6 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A74019D1B9C4A5700CAF2A6 /* EGORefreshTableHeaderView.m */; };
@@ -134,6 +135,8 @@
 		7A48E1751B9C7B2800BDCFD2 /* CommonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtils.m; sourceTree = "<group>"; };
 		7A48E1771B9C7B3A00BDCFD2 /* Configs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configs.h; sourceTree = "<group>"; };
 		7A48E1781B9C7B3A00BDCFD2 /* Configs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Configs.m; sourceTree = "<group>"; };
+		7A5864B41BA6EE6C009EF427 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		7A5864B51BA6EE6C009EF427 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		7A7401921B9C484000CAF2A6 /* ESViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESViewController.h; sourceTree = "<group>"; };
 		7A7401931B9C484000CAF2A6 /* ESViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESViewController.m; sourceTree = "<group>"; };
 		7A7401971B9C4A5700CAF2A6 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -689,6 +692,8 @@
 				7A48E1751B9C7B2800BDCFD2 /* CommonUtils.m */,
 				7ABAB6AF1B9AD3050032DB04 /* StreamingEntity.h */,
 				7ABAB6B01B9AD3050032DB04 /* StreamingEntity.m */,
+				7A5864B41BA6EE6C009EF427 /* WebViewController.h */,
+				7A5864B51BA6EE6C009EF427 /* WebViewController.m */,
 			);
 			path = Object;
 			sourceTree = "<group>";
@@ -913,6 +918,7 @@
 				7A48E1641B9C746600BDCFD2 /* gstplayer.c in Sources */,
 				7A48E1631B9C746600BDCFD2 /* gstplayer-media-info.c in Sources */,
 				7ABAB6A71B9ACB020032DB04 /* XPathQuery.m in Sources */,
+				7A5864B61BA6EE6C009EF427 /* WebViewController.m in Sources */,
 				7AF44E611BA424C100886736 /* UIButton+AFNetworking.m in Sources */,
 				7AA52C851B9C5A3C0035F26F /* MenuViewController.m in Sources */,
 				7A7401EC1B9C4A5700CAF2A6 /* Reachability.m in Sources */,

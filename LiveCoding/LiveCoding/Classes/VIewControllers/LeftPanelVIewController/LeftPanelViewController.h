@@ -15,8 +15,10 @@ UITableViewDataSource,
 UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) id <LeftPanelDelegate> delegate;
 
+-(void)reload;
 +(LeftPanelViewController *)viewControllerWithDelegate:(id<LeftPanelDelegate>)delegate;
 
 @end

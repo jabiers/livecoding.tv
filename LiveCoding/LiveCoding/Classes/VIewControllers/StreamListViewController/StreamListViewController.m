@@ -19,6 +19,8 @@
                                              isXML:NO];
     NSArray *elements = [NSArray array];
     
+    [WebViewController checkLoginStatus:sourceData];
+    
     elements = [xpath searchWithXPathQuery:@"//html//body//div[@class='browse-main-videos--item']"]; // <-- tags
     
     for (TFHppleElement *element in elements) {

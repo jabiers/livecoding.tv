@@ -28,6 +28,10 @@
     return leftPanel;
 }
 
+
+-(void)reload {
+    [self.tableView reloadData];
+}
 #pragma mark -
 #pragma mark - UISearchBar Delegate
 
@@ -51,7 +55,7 @@
     }];
 }
 
-#pragma mark - 
+#pragma mark -
 #pragma mark - UITableView Delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,7 +69,7 @@
     
     
 }
-#pragma mark - 
+#pragma mark -
 #pragma mark - UITableView DataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -84,7 +88,12 @@
         cell = [[LeftPanelItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LeftPanelItemTableViewCell"];
     }
     
-    [cell.titleLabel setText:[LEFT_PANEL_LIST objectAtIndex:indexPath.row]];
+    if ([[LEFT_PANEL_LIST lastObject] isEqualToString:[LEFT_PANEL_LIST objectAtIndex:indexPath.row]]) {
+        
+        [cell.titleLabel setText:[WebViewController sharedInstance].isLogedIn?@"Logout":@"Login"];
+    } else {
+        [cell.titleLabel setText:[LEFT_PANEL_LIST objectAtIndex:indexPath.row]];
+    }
     
     return cell;
     

@@ -10,7 +10,10 @@
 #import "StreamingEntity.h"
 #import "ESImageView.h"
 
-@interface StreamPlayerViewController : ESViewController <UIWebViewDelegate>
+@interface StreamPlayerViewController : ESViewController <
+UIWebViewDelegate,
+UIPickerViewDataSource,
+UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet ESImageView *thumbImageView;
 @property (weak, nonatomic) IBOutlet UIView *video_view;
@@ -21,6 +24,16 @@
 
 @property (strong, nonatomic) StreamingEntity *entity;
 @property (retain,nonatomic) NSString *uri;
+
+
+@property (weak, nonatomic) IBOutlet UIView *pickerBackgroundView;
+@property (weak, nonatomic) IBOutlet UIView *pickerContainer;
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UIButton *closeButton;
+@property (weak, nonatomic) IBOutlet UIButton *donateButton;
+
+@property (strong, nonatomic) NSString *csrfmiddlewaretoken;
+@property (strong, nonatomic) NSString *donation;
 
 //-(IBAction) play:(id)sender;
 //-(IBAction) pause:(id)sender;

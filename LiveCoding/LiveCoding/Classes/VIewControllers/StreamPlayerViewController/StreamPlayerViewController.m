@@ -41,6 +41,22 @@
     [self setTitle:[[self entity] title]];
     [[self thumbImageView] setImageUrl:[[self entity] thumbUrl]];
     
+    
+    [self.pickerBackgroundView setHidden:YES];
+    self.pickerContainer.layer.cornerRadius = 5.0f;
+    self.donateButton.layer.cornerRadius = 5.0f;
+    
+    if (![WebViewController sharedInstance].isLogedIn) {
+        self.webViewHeightConstraint.constant = 0;
+    } else {
+        NSString *chatUrlString = [NSString stringWithFormat:@"%@/chat/%@", HOST_NAME, [[self entity] author]];
+        
+        NSURL *chatUrl = [NSURL URLWithString:chatUrlString];
+        NSURLRequest *request = [NSURLRequest requestWithURL:chatUrl];
+        [self.webView loadRequest:request];
+    }
+
+    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -70,12 +86,6 @@
         NSLog(@"Error: %@", error);
     }];
     
-    NSString *chatUrlString = [NSString stringWithFormat:@"%@/chat/%@", HOST_NAME, [[self entity] author]];
-    
-    NSURL *chatUrl = [NSURL URLWithString:chatUrlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:chatUrl];
-    [self.webView loadRequest:request];
-    
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapGestureClicked:)];
     [self.video_view addGestureRecognizer:tapGesture];
@@ -104,6 +114,9 @@
 }
 
 
+#pragma mark -
+#pragma mark - Private Methods
+
 -(IBAction)onButtonClicked:(id)sender {
     if (![self.playPauseButton isSelected]) {
         [self onPlayButtonClicked:nil];
@@ -113,10 +126,23 @@
 }
 
 -(IBAction)onFollowButtonClicked:(id)sender {
+    NSURL *url = [NSURL URLWithString:[[self entity] streamingUrl]];
+    [[WebViewController sharedInstance] loadHtml:url completed:^{
+        [[[WebViewController sharedInstance] webView] stringByEvaluatingJavaScriptFromString:@"document.getElementById('follow').click()"];
+    }];
     
 }
 
 -(IBAction)onDonateButtonClicked:(id)sender {
+    
+    [self.pickerBackgroundView setHidden:NO];
+    [self.pickerBackgroundView setAlpha:0.0f];
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.pickerBackgroundView setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+
+    }];
+    
 }
 
 -(IBAction)onHireButtonClicked:(id)sender {
@@ -155,18 +181,48 @@
     }];
 }
 
-#pragma mark -
-#pragma mark - Private Methods
 
 -(IBAction)hiddemButtonClicked:(id)sender {
-    if (self.webViewHeightConstraint.constant > 0) {
-        self.webViewHeightConstraint.constant = 0;
-    } else {
-        self.webViewHeightConstraint.constant = 200;
-    }
+    NSString *chatUrlString = [NSString stringWithFormat:@"%@/chat/%@", HOST_NAME, [[self entity] author]];
+    
+    NSURL *chatUrl = [NSURL URLWithString:chatUrlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:chatUrl];
+    [self.webView loadRequest:request];
 
+    if ([WebViewController sharedInstance].isLogedIn) {
+        if (self.webViewHeightConstraint.constant > 0) {
+            self.webViewHeightConstraint.constant = 0;
+        } else {
+            self.webViewHeightConstraint.constant = 200;
+        }
+    } else {
+        [UIAlertView showWithTitle:@"" message:@"need login" cancelButtonTitle:nil otherButtonTitles:@[@"Ok"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [WebViewController login];
+        }];
+    }
 }
 
+-(IBAction)onDonateLinkButtonClicked:(id)sender {
+    NSURL *url = [NSURL URLWithString:[[self entity] streamingUrl]];
+    [[WebViewController sharedInstance] loadHtml:url completed:^{
+        
+        [[[WebViewController sharedInstance] webView] stringByEvaluatingJavaScriptFromString:@"document.getElementById('donation_popup').children[0].children[0].children[0].children[1].children[2].children[0].value = 100"];
+        [[[WebViewController sharedInstance] webView] stringByEvaluatingJavaScriptFromString:@"document.getElementById('donation_popup').children[0].children[0].children[0].children[1].submit()"];
+        
+        [[[WebViewController sharedInstance] webView] setFrame:self.view.bounds];
+        [self.view addSubview:[[WebViewController sharedInstance] webView]];
+    }];
+}
+
+-(IBAction)onCloseButtonClicked:(id)sender {
+    [self.pickerBackgroundView setAlpha:1.0f];
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.pickerBackgroundView setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [self.pickerBackgroundView setHidden:YES];
+    }];
+
+}
 #pragma mark -
 #pragma mark - C Methods
 
@@ -218,11 +274,26 @@ static void duration_changed (GstPlayer * unused, GstClockTime duration, StreamP
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - 
+#pragma mark - UIPickerView Delegate
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    self.donation = [DONATION_LIST objectAtIndex:row];
 }
 
+#pragma mark - UIPickerView DataSource
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [DONATION_LIST count];
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [DONATION_LIST objectAtIndex:row];
+}
 
 #pragma mark - Navigation
 

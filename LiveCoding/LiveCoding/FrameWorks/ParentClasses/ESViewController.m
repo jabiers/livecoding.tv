@@ -66,6 +66,8 @@
 -(void)showLeftPanelIfNeed {
     
     if (self.leftPanel) {
+        [self.leftPanel reload];
+        
         [self.view bringSubviewToFront:self.alertBackGroundView];
         [self.view bringSubviewToFront:self.leftPanel.view];
 

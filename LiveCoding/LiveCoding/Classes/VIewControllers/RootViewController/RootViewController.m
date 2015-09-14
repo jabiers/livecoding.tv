@@ -45,7 +45,8 @@
 }
 
 -(void)leftPanel:(LeftPanelViewController *)leftPanel didSelectedIndex:(NSIndexPath *)indexPath {
-    
+    NSString *title = [LEFT_PANEL_LIST objectAtIndex:indexPath.row];
+
     if ([APP_DELEGATE.currentViewController isKindOfClass:[StreamListViewController class]]) {
         NSString *title = [LEFT_PANEL_LIST objectAtIndex:indexPath.row];
 
@@ -68,7 +69,15 @@
         } else if ([title isEqualToString:@"Schedule"]) {
             [self performSegueWithIdentifier:@"ScheduleViewController" sender:nil];
         }
-        
+    }
+
+    if ([title isEqualToString:@"login"]) {
+        if ([WebViewController sharedInstance].isLogedIn) {
+            [WebViewController logout];
+        } else {
+            [WebViewController login];
+
+        }
     }
     
     [self showLeftPanelIfNeed];
