@@ -166,7 +166,13 @@
 #pragma mark - UICollection Delegate
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamLiveItems] objectAtIndex:[indexPath row]]];
+    
+    if (self.viewMode == StreamListViewModeLive) {
+        [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamLiveItems] objectAtIndex:[indexPath row]]];
+    } else {
+        [self performSegueWithIdentifier:@"StreamPlayerViewController" sender:[[self streamVideoItems] objectAtIndex:[indexPath row]]];
+    }
+
 
 }
 #pragma mark - 

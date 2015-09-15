@@ -77,6 +77,7 @@
         if (rtmp) {
             NSLog(@"rtmp : %@", rtmp);
             [self setUri:rtmp];
+//            [self setUri:@"rtmp://eumedia1.livecoding.tv:1935/vod/paulkim-1442237134.flv?t=9FE3CA31501C4ABCB84AEF14D1943F4E"];
             [self gstPlayerInit];
         }
 

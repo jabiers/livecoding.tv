@@ -14,7 +14,6 @@
 		7A07F11F1BA56B9200D5E5A7 /* ScheduleEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A07F11E1BA56B9200D5E5A7 /* ScheduleEntity.m */; };
 		7A48E1421B9C664400BDCFD2 /* EaglUIVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E1381B9C664400BDCFD2 /* EaglUIVIew.m */; };
 		7A48E1451B9C664400BDCFD2 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E1411B9C664400BDCFD2 /* VideoViewController.m */; };
-		7A48E1471B9C6F8400BDCFD2 /* GStreamer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A48E1461B9C6F8400BDCFD2 /* GStreamer.framework */; };
 		7A48E1631B9C746600BDCFD2 /* gstplayer-media-info.c in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E15E1B9C746600BDCFD2 /* gstplayer-media-info.c */; };
 		7A48E1641B9C746600BDCFD2 /* gstplayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7A48E1601B9C746600BDCFD2 /* gstplayer.c */; };
 		7A48E1701B9C779300BDCFD2 /* fonts.conf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48E16C1B9C779300BDCFD2 /* fonts.conf */; };
@@ -94,6 +93,7 @@
 		7AF44E6B1BA42D5200886736 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF44E6A1BA42D5200886736 /* RootViewController.m */; };
 		7AF44E701BA434B900886736 /* LeftPanelItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF44E6F1BA434B900886736 /* LeftPanelItemTableViewCell.m */; };
 		7AF472DE1BA1B09A00B523F1 /* StreamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF472DD1BA1B09A00B523F1 /* StreamCollectionViewCell.m */; };
+		7AF8B33F1BA8467A00BE486F /* GStreamer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AF8B33E1BA8467A00BE486F /* GStreamer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,7 +120,6 @@
 		7A48E1381B9C664400BDCFD2 /* EaglUIVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaglUIVIew.m; sourceTree = "<group>"; };
 		7A48E1401B9C664400BDCFD2 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		7A48E1411B9C664400BDCFD2 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
-		7A48E1461B9C6F8400BDCFD2 /* GStreamer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GStreamer.framework; sourceTree = "<group>"; };
 		7A48E15D1B9C746600BDCFD2 /* gstplayer-media-info-private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "gstplayer-media-info-private.h"; path = "../../../../../lib/gst/player/gstplayer-media-info-private.h"; sourceTree = "<group>"; };
 		7A48E15E1B9C746600BDCFD2 /* gstplayer-media-info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "gstplayer-media-info.c"; path = "../../../../../lib/gst/player/gstplayer-media-info.c"; sourceTree = "<group>"; };
 		7A48E15F1B9C746600BDCFD2 /* gstplayer-media-info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "gstplayer-media-info.h"; path = "../../../../../lib/gst/player/gstplayer-media-info.h"; sourceTree = "<group>"; };
@@ -269,6 +268,7 @@
 		7AF44E711BA444A100886736 /* LeftPanelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftPanelProtocol.h; sourceTree = "<group>"; };
 		7AF472DC1BA1B09A00B523F1 /* StreamCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamCollectionViewCell.h; sourceTree = "<group>"; };
 		7AF472DD1BA1B09A00B523F1 /* StreamCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamCollectionViewCell.m; sourceTree = "<group>"; };
+		7AF8B33E1BA8467A00BE486F /* GStreamer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GStreamer.framework; path = ../../../Library/Developer/GStreamer/iPhone.sdk/GStreamer.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,12 +277,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7AF44E671BA426F600886736 /* Security.framework in Frameworks */,
+				7AF8B33F1BA8467A00BE486F /* GStreamer.framework in Frameworks */,
 				7AA52C811B9C57630035F26F /* OpenGLES.framework in Frameworks */,
 				7AA52C7F1B9C57480035F26F /* QuartzCore.framework in Frameworks */,
 				7AA52C7D1B9C569E0035F26F /* Foundation.framework in Frameworks */,
 				7AA52C7B1B9C56970035F26F /* UIKit.framework in Frameworks */,
 				7AA52C791B9C56910035F26F /* CoreGraphics.framework in Frameworks */,
-				7A48E1471B9C6F8400BDCFD2 /* GStreamer.framework in Frameworks */,
 				7ABAB6AD1B9ACC190032DB04 /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,7 +544,7 @@
 			children = (
 				7AF44E661BA426F600886736 /* Security.framework */,
 				7A48E1221B9C62EB00BDCFD2 /* LiveCoding-prefix.pch */,
-				7A48E1461B9C6F8400BDCFD2 /* GStreamer.framework */,
+				7AF8B33E1BA8467A00BE486F /* GStreamer.framework */,
 				7AA52C801B9C57630035F26F /* OpenGLES.framework */,
 				7AA52C7E1B9C57480035F26F /* QuartzCore.framework */,
 				7AA52C7C1B9C569E0035F26F /* Foundation.framework */,
@@ -1095,6 +1095,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/GStreamer/iPhone.sdk",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LiveCoding-prefix.pch";
@@ -1151,6 +1152,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/GStreamer/iPhone.sdk",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LiveCoding-prefix.pch";
