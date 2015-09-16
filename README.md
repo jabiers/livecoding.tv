@@ -1,4 +1,4 @@
-# 9월 12일, 13일 토요일 일요일 3시부터 방송 시작합니다.
+# 9월 19일, 20일 토요일 일요일 3시부터 방송 시작합니다.
 많은 관심 주세요~
 
 
@@ -23,6 +23,7 @@ Android 로 개발할 예정인데... 아직 미정입니다. 원하시는 방�
 모든 개발 하는 과정은 livecoding.tv 에서 방송으로 보여드립니다.
 
 기존 개발 하는 과정의 VOD 는 Youtube 와 livecoding.tv 에서 시청이 가능합니다.
+- Blog : http://blog.lctvapp.com
 - YOUTUBE : https://www.youtube.com/channel/UCvaZwHaERM7qkKDdamcDR-A
 - liveconding.tv  : http://livecoding.tv/paulkim
 
